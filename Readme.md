@@ -21,6 +21,7 @@ runApp(
     child: const MyApp(),
   ),
 );
+```
 
 ### 2. `auth_provider.dart`
 This file contains the `AuthProvider`, which is an extension of `BaseProvider`. The `AuthProvider` is responsible for managing all authentication logic, such as login, sending verification codes, signing out, and checking if the user is verified.
@@ -41,7 +42,7 @@ class AuthProvider extends BaseProvider<AuthState> {
     }
   }
 }
-
+```
 ### 3. `auth_state.dart`
 This file defines the various states that the `AuthProvider` can emit. These states help represent different authentication statuses such as login success, login failure, verification success, and verification failure.
 
@@ -64,7 +65,7 @@ class LoginFailure extends AuthState {
 class VerificationSuccess extends AuthState {}
 
 class VerificationFailure extends AuthState {}
-
+```
 ### 4. `base_provider.dart`
 This file contains the `BaseProvider<T>`, which extends `ChangeNotifier`. It includes the core `emit` method that notifies listeners whenever the state changes. All specific providers, such as `AuthProvider`, extend this class to manage state and notify the UI.
 
@@ -82,7 +83,7 @@ class BaseProvider<T extends ProviderState> extends ChangeNotifier {
     notifyListeners();
   }
 }
-
+```
 ### 5. `provider_listener.dart`
 This file defines the `ProviderListener<T, S>`, which listens for state changes in a specific provider. The listener reacts to the emitted states and allows the UI to respond accordingly, such as navigating on a successful login or showing an error message on failure.
 
@@ -111,7 +112,7 @@ class ProviderListener<T extends ChangeNotifier, S extends ProviderState> extend
     );
   }
 }
-
+```
 ### 6. `provider_state.dart`
 This file contains the `ProviderState` class, which serves as the base class for all states in the application. Specific states, such as `AuthState`, extend from this class to manage state transitions like `LoadingState`, `SuccessState`, and `FailureState`.
 
@@ -129,7 +130,7 @@ class FailureState extends ProviderState {
   final String errorMessage;
   FailureState(this.errorMessage);
 }
-
+```
 ### 7. `sign_in_screen.dart`
 This file contains the UI for the sign-in screen. It uses the `ProviderListener` to listen for different states emitted by the `AuthProvider`, such as successful login or failure. Depending on the emitted state, the UI reacts by navigating to another screen or showing an error message.
 
@@ -179,7 +180,7 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
-
+```
 ## How to Use:
 
 1. **Clone this repository**:  
