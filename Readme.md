@@ -186,7 +186,7 @@ class SignInScreen extends StatelessWidget {
 1. **Clone this repository**:  
    Clone the repository to your local machine using the following command:
    ```bash
-   git clone https://github.com/your-repository-url.git
+   git clone https://github.com/HaywhyD/provider-bloc-implementation.git
 2. **Wrap your app with `ChangeNotifierProvider` or `MultiProvider`**:  
    Ensure that your `main.dart` file is properly configured to use `ChangeNotifierProvider` or `MultiProvider`, so that the `AuthProvider` is accessible throughout the app.
 
