@@ -187,7 +187,22 @@ class SignInScreen extends StatelessWidget {
    Clone the repository to your local machine using the following command:
    ```bash
    git clone https://github.com/HaywhyD/provider-bloc-implementation.git
-2. **Wrap your app with `ChangeNotifierProvider` or `MultiProvider`**:  
+   ```
+2. **Install dependencies**:  
+   After cloning the repository, navigate into the project directory and install all dependencies, including the `provider` package, using the following commands:
+
+   ```bash
+   cd provider-bloc-implementation
+   flutter pub get
+   ```
+   If the `provider` package is not already included, add it to your `pubspec.yaml` file:
+
+  ```yaml
+  dependencies:
+  provider: ^6.0.0
+  ```
+   
+3. **Wrap your app with `ChangeNotifierProvider` or `MultiProvider`**:  
    Ensure that your `main.dart` file is properly configured to use `ChangeNotifierProvider` or `MultiProvider`, so that the `AuthProvider` is accessible throughout the app.
 
    **Example**:
@@ -203,8 +218,8 @@ class SignInScreen extends StatelessWidget {
      ),
    );
 
-3. **Integrate the `AuthProvider` and `ProviderListener` into your widgets where necessary**:  
+4. **Integrate the `AuthProvider` and `ProviderListener` into your widgets where necessary**:  
    Use the `AuthProvider` for handling authentication logic, and the `ProviderListener` to listen for and respond to state changes in your UI.
 
-4. **Use the `AuthProvider` to handle authentication-related logic and emit corresponding states**:  
+5. **Use the `AuthProvider` to handle authentication-related logic and emit corresponding states**:  
    The `AuthProvider` should be used to manage all authentication logic, such as logging in, verifying users, and handling logouts. You can call its methods to trigger state changes and emit different authentication states.
