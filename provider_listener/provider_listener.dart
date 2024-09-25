@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:emagency/providers/base_provider.dart';
@@ -6,13 +8,13 @@ import 'package:emagency/providers/provider_state.dart';
 class ProviderListener<T extends BaseProvider<S>, S extends ProviderState>
     extends StatefulWidget {
   final T provider; // The provider instance to listen to
-  final Widget child;
-  final Function(BuildContext context, S state) listener;
+  Widget? child;
+  final void Function(BuildContext context, S state) listener;
 
-  const ProviderListener({
+  ProviderListener({
     super.key,
     required this.provider,
-    required this.child,
+    this.child, // Only used if it’s a standalone ProviderListener
     required this.listener,
   });
 
@@ -47,15 +49,17 @@ class _ProviderListenerState<T extends BaseProvider<S>, S extends ProviderState>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>.value(
-      value: widget.provider,
-      child: widget.child,
-    );
+        value: widget.provider,
+        child:
+            widget.child ?? Container() // If no child, provide an empty widget
+        );
   }
 }
 
-class MultiProviderListener extends StatelessWidget {
+// MultiProviderListener without generic type constraints, supports different provider types
+class MultiProviderListener extends StatefulWidget {
   final List<ProviderListener> listeners; // List of ProviderListeners
-  final Widget child;
+  final Widget child; // The child for MultiProviderListener
 
   const MultiProviderListener({
     super.key,
@@ -64,22 +68,20 @@ class MultiProviderListener extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // Apply all ProviderListeners in the widget tree
-    Widget result = child;
-    for (var listener in listeners.reversed) {
-      result = listener.copyWithChild(result);
-    }
-    return result;
-  }
+  State<MultiProviderListener> createState() => _MultiProviderListenerState();
 }
 
-extension on ProviderListener {
-  ProviderListener copyWithChild(Widget newChild) {
-    return ProviderListener(
-      provider: provider,
-      listener: listener,
-      child: newChild,
-    );
+class _MultiProviderListenerState extends State<MultiProviderListener> {
+  @override
+  Widget build(BuildContext context) {
+    // Apply all ProviderListeners in the widget tree
+    Widget result = widget.child;
+
+    // Wrap all listeners around the child
+    for (var listener in widget.listeners.reversed) {
+      listener.child = widget.child;
+      result = listener;
+    }
+    return result;
   }
 }
